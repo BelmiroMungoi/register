@@ -46,7 +46,7 @@ public class UsuarioController {
 	public ModelAndView editarUsuario(@PathVariable("idUser") Long idUser) {
 		Optional<UsuarioEntity> usuario = usuarioRepository.findById(idUser);
 		
-		ModelAndView view = new ModelAndView("cadastro/cadastroUsuario");
+		ModelAndView view = new ModelAndView("cadastros/cadastroUsuario");
 		view.addObject("usuario", usuario.get());
 		return view;
 	}
