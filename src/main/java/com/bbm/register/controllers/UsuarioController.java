@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,17 +21,21 @@ public class UsuarioController {
 	private UsuarioRepository usuarioRepository;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastroUsuario")
-	public String init() {
-		return "cadastros/cadastroUsuario";
+	public ModelAndView init() {
+		ModelAndView view = new ModelAndView("cadastros/cadastroUsuario");
+		view.addObject("usuario", new UsuarioEntity());
+		return view;
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/salvarUsuario")
+	@RequestMapping(method = RequestMethod.POST, value = "**/salvarUsuario")
 	public ModelAndView salvarUsuario(UsuarioEntity usuario) {
 		usuarioRepository.save(usuario);
 		// Após salvar os dados irá exibir na tela
 		ModelAndView view = new ModelAndView("cadastros/cadastroUsuario");
 		Iterable<UsuarioEntity> usuarios = usuarioRepository.findAll();
 		view.addObject("usuarios", usuarios);
+		view.addObject("usuario", new UsuarioEntity());
+
 		return view;
 	}
 
@@ -39,6 +44,8 @@ public class UsuarioController {
 		ModelAndView view = new ModelAndView("cadastros/cadastroUsuario");
 		Iterable<UsuarioEntity> usuarios = usuarioRepository.findAll();
 		view.addObject("usuarios", usuarios);
+		view.addObject("usuario", new UsuarioEntity());
+
 		return view;
 	}
 
@@ -48,6 +55,17 @@ public class UsuarioController {
 		
 		ModelAndView view = new ModelAndView("cadastros/cadastroUsuario");
 		view.addObject("usuario", usuario.get());
+		return view;
+	}
+	
+	@GetMapping("/deletarUsuario/{idUser}")
+	public ModelAndView deletarUsuario(@PathVariable("idUser") Long idUser) {
+		usuarioRepository.deleteById(idUser);
+		
+		ModelAndView view = new ModelAndView("cadastros/cadastroUsuario");
+		view.addObject("usuarios", usuarioRepository.findAll());
+		view.addObject("usuario", new UsuarioEntity());
+
 		return view;
 	}
 }
