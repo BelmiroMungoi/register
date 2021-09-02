@@ -24,7 +24,10 @@ public class UsuarioController {
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastroUsuario")
 	public ModelAndView init() {
 		ModelAndView view = new ModelAndView("cadastros/cadastroUsuario");
+		
+		view.addObject("usuarios", usuarioRepository.findAll());
 		view.addObject("usuario", new UsuarioEntity());
+		
 		return view;
 	}
 
