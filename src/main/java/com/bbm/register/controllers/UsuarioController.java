@@ -82,4 +82,13 @@ public class UsuarioController {
 		
 		return view;
 	}
+	
+	@GetMapping("/endereco/{idUser}")
+	public ModelAndView adicionarEndereco(@PathVariable("idUser") Long idUser) {
+		Optional<UsuarioEntity> usuario = usuarioRepository.findById(idUser);
+		
+		ModelAndView view = new ModelAndView("cadastros/endereco");
+		view.addObject("usuario", usuario.get());
+		return view;
+	}
 }
