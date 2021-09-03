@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -13,13 +15,14 @@ public class Endereco implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(nullable = false)
 	private String distrito;
 
 	@Column(nullable = false)
-	private String bairo;
+	private String bairro;
 
 	@Column(nullable = false)
 	private String telefone;
@@ -43,12 +46,12 @@ public class Endereco implements Serializable {
 		this.distrito = distrito;
 	}
 
-	public String getBairo() {
-		return bairo;
+	public String getBairro() {
+		return bairro;
 	}
 
-	public void setBairo(String bairo) {
-		this.bairo = bairo;
+	public void setBairro(String bairo) {
+		this.bairro = bairo;
 	}
 
 	public String getTelefone() {
