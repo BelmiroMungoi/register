@@ -61,8 +61,7 @@ html {
 			<td th:text="${ender.bairro}"></td>
 			<td th:text="${ender.telefone}"></td>
 			<td>
-				<a class="btn btn-warning" th:href="@{/editarUsuario/{idUser}(idUser=${usuario.id})}">Editar</a>
-				<a class="btn btn-danger" th:href="@{/deletarUsuario/{idUser}(idUser=${usuario.id})}">Deletar</a>			
+				<a class="btn btn-warning" th:href="@{/deletarEndereco/{idEnder}(idEnder=${ender.id})}">Deletar</a>			
 			</td>
 		</tr>
 	</table>
