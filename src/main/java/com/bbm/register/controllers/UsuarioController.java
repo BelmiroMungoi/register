@@ -93,7 +93,9 @@ public class UsuarioController {
 		Optional<UsuarioEntity> usuario = usuarioRepository.findById(idUser);
 
 		ModelAndView view = new ModelAndView("cadastros/endereco");
+		view.addObject("endereco", enderecoRepository.getEnderecos(idUser));
 		view.addObject("usuario", usuario.get());
+		
 		return view;
 	}
 
@@ -101,12 +103,13 @@ public class UsuarioController {
 	public ModelAndView addEndereco(Endereco endereco, @PathVariable("idUser") Long idUser) {
 		
 		UsuarioEntity usuario = usuarioRepository.findById(idUser).get();
-		
+		endereco.setUsuario(usuario);
+		enderecoRepository.save(endereco);
+
 		ModelAndView view = new ModelAndView("cadastros/endereco");
 		view.addObject("usuario", usuario);
-		endereco.setUsuario(usuario);
-		
-		enderecoRepository.save(endereco);
+		view.addObject("endereco", enderecoRepository.getEnderecos(idUser));
+				
 		return view;
 	}
 }
