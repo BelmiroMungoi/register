@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bbm.register.model.Endereco;
 import com.bbm.register.model.UsuarioEntity;
+import com.bbm.register.repository.EnderecoRepository;
 import com.bbm.register.repository.UsuarioRepository;
 
 @Controller
@@ -20,14 +22,17 @@ public class UsuarioController {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastroUsuario")
 	public ModelAndView init() {
 		ModelAndView view = new ModelAndView("cadastros/cadastroUsuario");
-		
+
 		view.addObject("usuarios", usuarioRepository.findAll());
 		view.addObject("usuario", new UsuarioEntity());
-		
+
 		return view;
 	}
 
@@ -56,39 +61,52 @@ public class UsuarioController {
 	@GetMapping("/editarUsuario/{idUser}")
 	public ModelAndView editarUsuario(@PathVariable("idUser") Long idUser) {
 		Optional<UsuarioEntity> usuario = usuarioRepository.findById(idUser);
-		
+
 		ModelAndView view = new ModelAndView("cadastros/cadastroUsuario");
 		view.addObject("usuario", usuario.get());
 		return view;
 	}
-	
+
 	@GetMapping("/deletarUsuario/{idUser}")
 	public ModelAndView deletarUsuario(@PathVariable("idUser") Long idUser) {
 		usuarioRepository.deleteById(idUser);
-		
+
 		ModelAndView view = new ModelAndView("cadastros/cadastroUsuario");
 		view.addObject("usuarios", usuarioRepository.findAll());
 		view.addObject("usuario", new UsuarioEntity());
 
 		return view;
 	}
-	
+
 	@PostMapping("**/pesquisarUsuario")
 	public ModelAndView pesquisarUsuario(@RequestParam("nomePesquisa") String nomePesquisa) {
-		
+
 		ModelAndView view = new ModelAndView("cadastros/cadastroUsuario");
 		view.addObject("usuarios", usuarioRepository.findByNome(nomePesquisa.trim().toUpperCase()));
 		view.addObject("usuario", new UsuarioEntity());
-		
+
 		return view;
 	}
-	
+
 	@GetMapping("/endereco/{idUser}")
-	public ModelAndView adicionarEndereco(@PathVariable("idUser") Long idUser) {
+	public ModelAndView endereco(@PathVariable("idUser") Long idUser) {
 		Optional<UsuarioEntity> usuario = usuarioRepository.findById(idUser);
-		
+
 		ModelAndView view = new ModelAndView("cadastros/endereco");
 		view.addObject("usuario", usuario.get());
+		return view;
+	}
+
+	@PostMapping("**/addEndereco/{idUser}")
+	public ModelAndView addEndereco(Endereco endereco, @PathVariable("idUser") Long idUser) {
+		
+		UsuarioEntity usuario = usuarioRepository.findById(idUser).get();
+		
+		ModelAndView view = new ModelAndView("cadastros/endereco");
+		view.addObject("usuario", usuario);
+		endereco.setUsuario(usuario);
+		
+		enderecoRepository.save(endereco);
 		return view;
 	}
 }
