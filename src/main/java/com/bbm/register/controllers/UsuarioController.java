@@ -112,4 +112,18 @@ public class UsuarioController {
 				
 		return view;
 	}
+	
+	@GetMapping("/deletarEndereco/{idEnder}")
+	public ModelAndView deletarEndereco(@PathVariable("idEnder") Long idEnder) {
+		UsuarioEntity usuario = enderecoRepository.findById(idEnder)
+				.get().getUsuario();
+		
+		enderecoRepository.deleteById(idEnder);
+
+		ModelAndView view = new ModelAndView("cadastros/endereco");
+		view.addObject("usuario", usuario);
+		view.addObject("endereco", enderecoRepository.getEnderecos(usuario.getId()));
+
+		return view;
+	}
 }
