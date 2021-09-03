@@ -28,15 +28,15 @@ html {
 			<form th:action="@{/addEndereco/{idUser}(idUser=${usuario.id})}" class="row g-3" method="post">
 				<div class="col-md-4">
 					<label for="distrito" class="form-label">Distrito</label>
-					 <input	type="text" class="form-control" name="distrito">
+					 <input	type="text" class="form-control" name="distrito" placeholder="Ex: Matola">
 				</div>
 				<div class="col-md-4">
 					<label for="bairro" class="form-label">Bairro</label>
-					 <input	type="text" class="form-control" name="bairro">
+					 <input	type="text" class="form-control" name="bairro" placeholder="Ex: Fomento">
 				</div>
 				<div class="col-md-4">
 					<label for="telefone" class="form-label">Telefone</label>
-					 <input	type="number" class="form-control" name="telefone">
+					 <input	type="number" class="form-control" name="telefone" placeholder="Ex: 865765412">
 				</div>
 				<div class="col-md-12">
 					<button type="submit" class="btn btn-success">Salvar</button>

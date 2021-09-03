@@ -23,19 +23,19 @@ html {
 		</div>
 		<div class="col-md-6">
 			<label for="nome" class="form-label">Nome</label> 
-			<input type="text" class="form-control" name="nome" th:field="*{nome}">
+			<input type="text" class="form-control" name="nome" placeholder="Exemplo: Monkey D. Luffy" th:field="*{nome}">
 		</div>
 		<div class="col-md-6">
 			<label for="bi" class="form-label">BI</label>
-			<input type="text" class="form-control" name="bi" th:field="*{bi}">
+			<input type="text" class="form-control" name="bi" placeholder="Exemplo: 100213123419M" th:field="*{bi}">
 		</div>
 		<div class="col-md-6">
 			<label for="email" class="form-label">Email</label> 
-			<input type="email" class="form-control" name="email" th:field="*{email}">
+			<input type="email" class="form-control" name="email" placeholder="Exemplo: luffy@gmail.com" th:field="*{email}">
 		</div>
 		<div class="col-md-6">
 			<label for="senha" class="form-label">Senha</label>
-	    	<input type="text" class="form-control" name="senha" th:field="*{senha}">
+	    	<input type="text" class="form-control" name="senha" placeholder="Exemplo: kaizoku" th:field="*{senha}">
 	    </div>
 	    <div class="col-md-12">
 	    	<button type="submit" class="btn btn-primary">Salvar</button>
@@ -48,7 +48,7 @@ html {
 	<form action="/pesquisarUsuario" class="row g-3" method="post">
 		<div class="col-md-6">
 			<label for="nomePesquisa" class="form-label">Pesquisar Usuário</label>
-	    	<input type="text" class="form-control" name="nomePesquisa">
+	    	<input type="text" class="form-control" name="nomePesquisa" placeholder="Pesquise Aqui">
 	    </div>
 	    <div class="col-md-12">
 	    	<button type="submit" class="btn btn-success">Pesquisar</button>
