@@ -9,6 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class UsuarioEntity implements Serializable {
@@ -19,9 +22,21 @@ public class UsuarioEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotNull(message = "Nome não pode ser nulo! Insira o Nome.")
+	@NotEmpty(message = "Nome não pode ser vazio! Insira o Nome.")
 	private String nome;
+	
+	@NotNull(message = "BI não pode ser nulo! Insira o BI.")
+	@NotEmpty(message = "BI não pode ser vazio! Insira o BI.")
 	private String bi;
+	
+	@NotNull(message = "Email não pode ser nulo! Insira o Email.")
+	@NotEmpty(message = "Email não pode ser vazio! Insira o Email.")
+	@Email(message = "Email inválido")
 	private String email;
+	
+	@NotNull(message = "Senha não pode ser nula! Insira a Senha.")
+	@NotEmpty(message = "Senha não pode ser vazia! Insira a Senha.")
 	private String senha;
 
 	@OneToMany(mappedBy = "usuario", orphanRemoval = true, cascade = CascadeType.ALL)
