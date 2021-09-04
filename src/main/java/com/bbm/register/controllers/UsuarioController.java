@@ -47,33 +47,35 @@ public class UsuarioController {
 
 		// Caso haja algum erro
 		if (bindingResult.hasErrors()) {
-			//Vai retornar para a mesma com a messagem de erro
+			// Vai retornar para a mesma com a messagem de erro
 			ModelAndView andView = new ModelAndView("cadastros/cadastroUsuario");
 			Iterable<UsuarioEntity> usuarios = usuarioRepository.findAll();
 			andView.addObject("usuarios", usuarios);
 			andView.addObject("usuario", usuario);
-			
+
 			List<String> msg = new ArrayList<String>();
-			
-			//busca os erros e adiciona a respectiva messagem
-			for (ObjectError error: bindingResult.getAllErrors()) {
+
+			// busca os erros e adiciona a respectiva messagem
+			for (ObjectError error : bindingResult.getAllErrors()) {
 				msg.add(error.getDefaultMessage());
 			}
-			
-			//Coloca a messagem de erro na tela
+
+			// Coloca a messagem de erro na tela
 			andView.addObject("msg", msg);
 			return andView;
+
+		} else {
+
+			usuarioRepository.save(usuario);
+
+			// Após salvar os dados irá exibir na tela
+			ModelAndView view = new ModelAndView("cadastros/cadastroUsuario");
+			Iterable<UsuarioEntity> usuarios = usuarioRepository.findAll();
+			view.addObject("usuarios", usuarios);
+			view.addObject("usuario", new UsuarioEntity());
+
+			return view;
 		}
-		
-		usuarioRepository.save(usuario);
-
-		// Após salvar os dados irá exibir na tela
-		ModelAndView view = new ModelAndView("cadastros/cadastroUsuario");
-		Iterable<UsuarioEntity> usuarios = usuarioRepository.findAll();
-		view.addObject("usuarios", usuarios);
-		view.addObject("usuario", new UsuarioEntity());
-
-		return view;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/listarUsuario")
@@ -129,16 +131,39 @@ public class UsuarioController {
 
 	@PostMapping("**/addEndereco/{idUser}")
 	public ModelAndView addEndereco(Endereco endereco, @PathVariable("idUser") Long idUser) {
-
 		UsuarioEntity usuario = usuarioRepository.findById(idUser).get();
-		endereco.setUsuario(usuario);
-		enderecoRepository.save(endereco);
 
-		ModelAndView view = new ModelAndView("cadastros/endereco");
-		view.addObject("usuario", usuario);
-		view.addObject("endereco", enderecoRepository.getEnderecos(idUser));
+		if (endereco != null && endereco.getDistrito().isEmpty() || endereco.getBairro().isEmpty()
+				|| endereco.getTelefone().isEmpty()) {
+			ModelAndView view = new ModelAndView("cadastros/endereco");
+			view.addObject("usuario", usuario);
+			view.addObject("endereco", enderecoRepository.getEnderecos(idUser));
 
-		return view;
+			List<String> msg = new ArrayList<String>();
+			if (endereco.getDistrito().isEmpty()) {
+				msg.add("Preencha o Campo Distrito!");
+				
+			} else if (endereco.getBairro().isEmpty()) {
+				msg.add("Preencha o Campo Bairro");
+				
+			} else if (endereco.getTelefone().isEmpty()) {
+				msg.add("Preencha o Campo Telefone");
+			}
+
+			view.addObject("msg", msg);
+
+			return view;
+		} else {
+
+			endereco.setUsuario(usuario);
+			enderecoRepository.save(endereco);
+
+			ModelAndView view = new ModelAndView("cadastros/endereco");
+			view.addObject("usuario", usuario);
+			view.addObject("endereco", enderecoRepository.getEnderecos(idUser));
+
+			return view;
+		}
 	}
 
 	@GetMapping("/deletarEndereco/{idEnder}")
