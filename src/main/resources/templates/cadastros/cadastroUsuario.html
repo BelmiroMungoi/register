@@ -17,6 +17,10 @@ html {
 
 	<form action="/salvarUsuario" id="formUser" class="row g-3" method="post" th:object="${usuario}">
 		<h1>Cadastro de Usuário Com Spring Mvc</h1>
+		
+		<div th:each = "m : ${msg}">
+			<span th:text = "${m}"></span>
+		</div>
 		<div class="col-12">
 			<label for="id" class="form-label">ID</label>
 			<input type="text" class="form-control" id="id" readonly="readonly" th:field="*{id}">
