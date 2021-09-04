@@ -1,9 +1,15 @@
 package com.bbm.register.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +28,7 @@ public class UsuarioController {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	
+
 	@Autowired
 	private EnderecoRepository enderecoRepository;
 
@@ -37,8 +43,30 @@ public class UsuarioController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "**/salvarUsuario")
-	public ModelAndView salvarUsuario(UsuarioEntity usuario) {
+	public ModelAndView salvarUsuario(@Valid UsuarioEntity usuario, BindingResult bindingResult) {
+
+		// Caso haja algum erro
+		if (bindingResult.hasErrors()) {
+			//Vai retornar para a mesma com a messagem de erro
+			ModelAndView andView = new ModelAndView("cadastros/cadastroUsuario");
+			Iterable<UsuarioEntity> usuarios = usuarioRepository.findAll();
+			andView.addObject("usuarios", usuarios);
+			andView.addObject("usuario", usuario);
+			
+			List<String> msg = new ArrayList<String>();
+			
+			//busca os erros e adiciona a respectiva messagem
+			for (ObjectError error: bindingResult.getAllErrors()) {
+				msg.add(error.getDefaultMessage());
+			}
+			
+			//Coloca a messagem de erro na tela
+			andView.addObject("msg", msg);
+			return andView;
+		}
+		
 		usuarioRepository.save(usuario);
+
 		// Após salvar os dados irá exibir na tela
 		ModelAndView view = new ModelAndView("cadastros/cadastroUsuario");
 		Iterable<UsuarioEntity> usuarios = usuarioRepository.findAll();
@@ -95,13 +123,13 @@ public class UsuarioController {
 		ModelAndView view = new ModelAndView("cadastros/endereco");
 		view.addObject("endereco", enderecoRepository.getEnderecos(idUser));
 		view.addObject("usuario", usuario.get());
-		
+
 		return view;
 	}
 
 	@PostMapping("**/addEndereco/{idUser}")
 	public ModelAndView addEndereco(Endereco endereco, @PathVariable("idUser") Long idUser) {
-		
+
 		UsuarioEntity usuario = usuarioRepository.findById(idUser).get();
 		endereco.setUsuario(usuario);
 		enderecoRepository.save(endereco);
@@ -109,15 +137,14 @@ public class UsuarioController {
 		ModelAndView view = new ModelAndView("cadastros/endereco");
 		view.addObject("usuario", usuario);
 		view.addObject("endereco", enderecoRepository.getEnderecos(idUser));
-				
+
 		return view;
 	}
-	
+
 	@GetMapping("/deletarEndereco/{idEnder}")
 	public ModelAndView deletarEndereco(@PathVariable("idEnder") Long idEnder) {
-		UsuarioEntity usuario = enderecoRepository.findById(idEnder)
-				.get().getUsuario();
-		
+		UsuarioEntity usuario = enderecoRepository.findById(idEnder).get().getUsuario();
+
 		enderecoRepository.deleteById(idEnder);
 
 		ModelAndView view = new ModelAndView("cadastros/endereco");
