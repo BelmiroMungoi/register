@@ -28,7 +28,7 @@ public class Endereco implements Serializable {
 	private String telefone;
 
 	@ManyToOne
-	private UsuarioEntity usuario;
+	private Funcionario usuario;
 
 	public Long getId() {
 		return id;
@@ -62,11 +62,11 @@ public class Endereco implements Serializable {
 		this.telefone = telefone;
 	}
 
-	public UsuarioEntity getUsuario() {
+	public Funcionario getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(UsuarioEntity usuario) {
+	public void setUsuario(Funcionario usuario) {
 		this.usuario = usuario;
 	}
 
