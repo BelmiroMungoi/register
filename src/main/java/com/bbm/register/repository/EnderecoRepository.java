@@ -13,6 +13,6 @@ import com.bbm.register.model.Endereco;
 @Transactional
 public interface EnderecoRepository extends JpaRepository<Endereco, Long> {
 
-	@Query("select e from Endereco e where e.usuario.id = ?1")
+	@Query("select e from Endereco e where e.funcionario.id = ?1")
 	public List<Endereco> getEnderecos(Long id);
 }
