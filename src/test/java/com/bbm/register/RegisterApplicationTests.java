@@ -10,7 +10,7 @@ class RegisterApplicationTests {
 	@Test
 	public void testCripto() {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		String result = encoder.encode("admin");
+		String result = encoder.encode("123");
 		System.out.println("Result = " + result);
 	}
 
