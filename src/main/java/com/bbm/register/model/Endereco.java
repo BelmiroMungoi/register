@@ -2,6 +2,7 @@ package com.bbm.register.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,8 +28,8 @@ public class Endereco implements Serializable {
 	@Column(nullable = false)
 	private String telefone;
 
-	@ManyToOne
-	private Funcionario usuario;
+	@ManyToOne(cascade = CascadeType.REMOVE)
+	private Funcionario funcionario;
 
 	public Long getId() {
 		return id;
@@ -63,11 +64,11 @@ public class Endereco implements Serializable {
 	}
 
 	public Funcionario getUsuario() {
-		return usuario;
+		return funcionario;
 	}
 
-	public void setUsuario(Funcionario usuario) {
-		this.usuario = usuario;
+	public void setUsuario(Funcionario funcionario) {
+		this.funcionario = funcionario;
 	}
 
 }
