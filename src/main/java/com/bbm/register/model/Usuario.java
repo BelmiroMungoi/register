@@ -35,7 +35,7 @@ public class Usuario implements UserDetails {
 	private String passWord;
 
 	@OneToMany(mappedBy = "boss", orphanRemoval = true, cascade = CascadeType.ALL)
-	private List<Usuario> boss;
+	private List<Funcionario> funcionario;
 
 	@OneToMany
 	@JoinTable(name = "usuario_roles", 
