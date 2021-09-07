@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="utf-8">
 <title>Cadastro de Usuário</title>
@@ -32,7 +33,7 @@ fieldset {
       </ul> 
       <div class="nav-item dropdown">
           <a class="dropdown-toggle btn btn-outline-light" style="margin-left: 10px; border: none" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Nome Usuário
+            <span sec:authentication="name"></span>
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="#">Action</a></li>
@@ -67,7 +68,7 @@ fieldset {
 			<label for="email" class="form-label">Cargo</label> 
 			<input type="text" class="form-control" id="cargoFunc" name="cargoFunc" placeholder="Exemplo: Backend Developer" th:field="*{cargoFunc}">
 	    </div>
-		<div class="col-md-6">
+		<div class="col-md-6" sec:authorize="hasRole('ROLE_ADMIN')">
 			<label for="email" class="form-label">Email</label> 
 			<input type="email" class="form-control" name="email" placeholder="Exemplo: luffy@gmail.com" th:field="*{email}">
 		</div>
@@ -79,10 +80,10 @@ fieldset {
 	</form>
 </fieldset>
 	
-	<fieldset>
-	<legend>Campos de Pesquisa</legend>
+	<fieldset style = " border: 1px solid #999">
+	<legend>Campo de Pesquisa</legend>
 	<form action="/pesquisarUsuario" class="row g-3" method="post">
-		<div class="col-md-6">
+		<div class="col-md-6" style="margin-top: 0%">
 			<label for="nomePesquisa" class="form-label">Pesquisar Usuário</label>
 	    	<input type="text" class="form-control" name="nomePesquisa" placeholder="Insira o nome do usuário aqui">
 	    </div>
