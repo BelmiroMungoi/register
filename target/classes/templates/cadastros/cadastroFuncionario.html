@@ -27,7 +27,7 @@ fieldset {
           <a style="margin-left: 10px; border: none" class="btn btn-outline-light" aria-current="page" href="/">Home</a>
         </li>
         <li class="nav-item">
-          <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="/cadastroFuncionario">Cadastro de Funcionarios</a>
+          <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="/cadastroFuncionario">Cadastro de Funcionários</a>
         </li>
 
       </ul> 
@@ -46,7 +46,7 @@ fieldset {
 </nav>
 
 <fieldset class="scheduler-border">
-	<legend class="scheduler-border">Cadastro de Usuário</legend>
+	<legend class="scheduler-border">Cadastro de Funcionário</legend>
 	<form action="/salvarUsuario" id="formUser" class="row g-3" method="post" th:object="${usuario}">
 		
 		<div th:each = "m : ${msg}">
@@ -56,22 +56,32 @@ fieldset {
 			<label for="id" class="form-label">ID</label>
 			<input type="text" class="form-control" id="id" readonly="readonly" th:field="*{id}">
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<label for="nome" class="form-label">Nome</label> 
 			<input type="text" class="form-control" name="nomee" placeholder="Exemplo: Monkey D. Luffy" th:field="*{nome}">
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<label for="bi" class="form-label">BI</label>
 			<input type="text" class="form-control" name="bi" placeholder="Exemplo: 100213123419M" th:field="*{bi}">
+		</div>
+		<div class="col-md-4">
+			<label for="sexo" class="form-label">Sexo</label>
+			<select class="form-control text-center" name="sexo" th:field = "*{sexo}">
+			 	<option value="" th:text = "--[SELECIONE]--">
+				<option value="MASCULIUNO" th:text = "Masculino"/>
+				<option value="FEMININO" th:text = "Feminino"/>
+				<option value="OUTRO" th:text = "Outro">
+			</select>
+		</div>
+		<div class="col-md-6" sec:authorize="hasRole('ROLE_ADMIN')">
+			<label for="email" class="form-label">Email</label> 
+			<input type="email" class="form-control" name="email" placeholder="Exemplo: luffy@gmail.com" th:field="*{email}">
 		</div>
 		<div class="col-md-6">
 			<label for="email" class="form-label">Cargo</label> 
 			<input type="text" class="form-control" id="cargoFunc" name="cargoFunc" placeholder="Exemplo: Backend Developer" th:field="*{cargoFunc}">
 	    </div>
-		<div class="col-md-6" sec:authorize="hasRole('ROLE_ADMIN')">
-			<label for="email" class="form-label">Email</label> 
-			<input type="email" class="form-control" name="email" placeholder="Exemplo: luffy@gmail.com" th:field="*{email}">
-		</div>
+		
 		
 	    <div class="col-md-12">
 	    	<button type="submit" class="btn btn-primary">Salvar</button>
@@ -84,12 +94,21 @@ fieldset {
 	<legend>Campo de Pesquisa</legend>
 	<form action="/pesquisarUsuario" class="row g-3" method="post">
 		<div class="col-md-6" style="margin-top: 0%">
-			<label for="nomePesquisa" class="form-label">Pesquisar Usuário</label>
-	    	<input type="text" class="form-control" name="nomePesquisa" placeholder="Insira o nome do usuário aqui">
+			<!-- <label for="nomePesquisa" class="form-label">Pesquisar Usuário</label> -->
+	    	<input type="text" class="form-control" name="nomePesquisa" placeholder="Insira o nome do funcionário aqui para a pesquisa">
 	    </div>
+	    <div class="col-md-6" style="margin-top: 0%">
+			<!-- <label for="sexoPesquisa" class="form-label">Sexo</label> -->
+			<select class="form-control text-center" name="sexoPesquisa">
+			 	<option value="">--[Selecione o Sexo do Funcionário para Pesquisa]--</option>
+				<option value="MASCULIUNO" th:text = "Masculino"/>
+				<option value="FEMININO" th:text = "Feminino"/>
+				<option value="OUTRO" th:text = "Outro">
+			</select>
+		</div>
 	    <div class="col-md-12">
 	    	<button type="submit" class="btn btn-success">Pesquisar</button>
-	    	<a href="/listarUsuario" class="btn btn-dark">Listar Usuários</a>
+	    	<a href="/listarUsuario" class="btn btn-dark">Listar Funcionários</a>
 	    </div>
 	</form>
 	</fieldset>
@@ -106,7 +125,7 @@ fieldset {
 		</tr>
 		<tr th:each = "usuario : ${usuarios}">
 			<td th:text="${usuario.id}"></td>
-			<td><a th:href="@{/endereco/{idUser}(idUser=${usuario.id})}" style="border: none" class="btn btn-outline-secondary"><span th:text="${usuario.nome}"></span></a></td>
+			<td><a th:href="@{/endereco/{idUser}(idUser=${usuario.id})}" style="border: none" class="btn btn-outline-secondary"><b><span th:text="${usuario.nome}"></span></b></a></td>
 			<td th:text="${usuario.bi}"></td>
 			<td th:text="${usuario.email}"></td>
 			<td th:text="${usuario.cargoFunc}"></td>
