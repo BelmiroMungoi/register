@@ -2,7 +2,6 @@ package com.bbm.register.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -25,10 +24,16 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter{
 		http.csrf()
 		.disable() // Desativa as configuracões padrão de memoria
 		.authorizeRequests() // Permite restringir acesso
-		.antMatchers(HttpMethod.GET, "/login").permitAll() // Qualquer usuario pode acessar a pagina de login
+		
+		//.antMatchers(HttpMethod.GET, "/login").permitAll() // Qualquer usuario pode acessar a pagina de login
+		//.antMatchers(HttpMethod.GET, "/cadastroFuncionario").hasAnyRole("ADMIN")
+		
 		.anyRequest().authenticated() // Entra na autenticacão
 		.and().formLogin().permitAll() // Cria o formulario de login e permite o acesso
-		.and().logout() // Para sair do sistema, vai mapeiar a url de logout e invalidar o usuario autenticado
+		.loginPage("/login")
+		.defaultSuccessUrl("/")
+		.failureUrl("/login?error=true")
+		.and().logout().logoutSuccessUrl("/login") // Para sair do sistema, vai mapeiar a url de logout e invalidar o usuario autenticado
 		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
 	}
 	
@@ -38,6 +43,7 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter{
 		.passwordEncoder(new BCryptPasswordEncoder());
 		
 		/* 
+		 * Autenticacao de usuario em memoria
 		auth.inMemoryAuthentication()
 		.passwordEncoder(new BCryptPasswordEncoder())// Para criptografar a password
 		.withUser("belmiro") // Define o usuario
