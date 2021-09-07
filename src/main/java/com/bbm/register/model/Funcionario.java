@@ -42,6 +42,8 @@ public class Funcionario implements Serializable {
 	@NotEmpty(message = "Cargo não pode ser vazio! Insira a Cargo.")
 	private String cargoFunc;
 
+	private String sexo;
+
 	@OneToMany(mappedBy = "funcionario", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Endereco> endereco;
 
@@ -88,6 +90,14 @@ public class Funcionario implements Serializable {
 		this.cargoFunc = cargoFunc;
 	}
 
+	public String getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
+
 	public List<Endereco> getEndereco() {
 		return endereco;
 	}
@@ -122,7 +132,5 @@ public class Funcionario implements Serializable {
 				&& Objects.equals(email, other.email) && Objects.equals(endereco, other.endereco)
 				&& Objects.equals(id, other.id) && Objects.equals(nome, other.nome);
 	}
-	
-	
 
 }
