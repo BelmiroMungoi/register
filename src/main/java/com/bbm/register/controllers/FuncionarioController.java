@@ -109,10 +109,23 @@ public class FuncionarioController {
 	}
 
 	@PostMapping("**/pesquisarUsuario")
-	public ModelAndView pesquisarUsuario(@RequestParam("nomePesquisa") String nomePesquisa) {
+	public ModelAndView pesquisarUsuario(@RequestParam("nomePesquisa") String nomePesquisa,
+			@RequestParam("sexoPesquisa") String sexoPesquisa) {
 
+		List<Funcionario> funcionarios = new ArrayList<Funcionario>();
+		
+		if ((nomePesquisa != null && !nomePesquisa.isEmpty()) 
+				&& (sexoPesquisa != null && !sexoPesquisa.isEmpty())) {
+			funcionarios = funcionarioRepository.findByNomeSexo(nomePesquisa.trim().toUpperCase(), sexoPesquisa);
+			
+		} else if (sexoPesquisa != null && !sexoPesquisa.isEmpty()) {
+			funcionarios = funcionarioRepository.findBySexo(sexoPesquisa);
+		} else {
+			funcionarios = funcionarioRepository.findByNome(nomePesquisa.trim().toUpperCase());
+		}
+		
 		ModelAndView view = new ModelAndView("cadastros/cadastroFuncionario");
-		view.addObject("usuarios", funcionarioRepository.findByNome(nomePesquisa.trim().toUpperCase()));
+		view.addObject("usuarios", funcionarios);
 		view.addObject("usuario", new Funcionario());
 
 		return view;
