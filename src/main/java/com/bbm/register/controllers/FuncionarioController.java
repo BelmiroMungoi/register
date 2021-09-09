@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.bbm.register.model.Endereco;
+import com.bbm.register.model.FuncionarioEndereco;
 import com.bbm.register.model.Funcionario;
 import com.bbm.register.repository.EnderecoRepository;
 import com.bbm.register.repository.FuncionarioRepository;
@@ -143,7 +143,7 @@ public class FuncionarioController {
 	}
 
 	@PostMapping("**/addEndereco/{idUser}")
-	public ModelAndView addEndereco(Endereco endereco, @PathVariable("idUser") Long idUser) {
+	public ModelAndView addEndereco(FuncionarioEndereco endereco, @PathVariable("idUser") Long idUser) {
 		Funcionario usuario = funcionarioRepository.findById(idUser).get();
 
 		if (endereco != null && endereco.getDistrito().isEmpty() || endereco.getBairro().isEmpty()
