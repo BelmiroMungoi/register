@@ -45,7 +45,7 @@ public class Funcionario implements Serializable {
 	private String sexo;
 
 	@OneToMany(mappedBy = "funcionario", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private List<Endereco> endereco;
+	private List<FuncionarioEndereco> endereco;
 
 	@ManyToOne
 	private Usuario boss;
@@ -98,11 +98,11 @@ public class Funcionario implements Serializable {
 		this.sexo = sexo;
 	}
 
-	public List<Endereco> getEndereco() {
+	public List<FuncionarioEndereco> getEndereco() {
 		return endereco;
 	}
 
-	public void setEndereco(List<Endereco> endereco) {
+	public void setEndereco(List<FuncionarioEndereco> endereco) {
 		this.endereco = endereco;
 	}
 

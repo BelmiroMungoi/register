@@ -7,12 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bbm.register.model.Endereco;
+import com.bbm.register.model.FuncionarioEndereco;
 
 @Repository
 @Transactional
-public interface EnderecoRepository extends JpaRepository<Endereco, Long> {
+public interface EnderecoRepository extends JpaRepository<FuncionarioEndereco, Long> {
 
-	@Query("select e from Endereco e where e.funcionario.id = ?1")
-	public List<Endereco> getEnderecos(Long id);
+	@Query("select e from FuncionarioEndereco e where e.funcionario.id = ?1")
+	public List<FuncionarioEndereco> getEnderecos(Long id);
 }
