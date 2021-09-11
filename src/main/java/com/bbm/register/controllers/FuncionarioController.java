@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bbm.register.model.FuncionarioEndereco;
+import com.bbm.register.reports.ReportUtil;
 import com.bbm.register.model.Funcionario;
 import com.bbm.register.repository.EnderecoRepository;
 import com.bbm.register.repository.FuncionarioRepository;
@@ -31,6 +32,9 @@ public class FuncionarioController {
 
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private ReportUtil reportUtil;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastroFuncionario")
 	public ModelAndView init() {
