@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,7 @@ public class FuncionarioController {
 
 	@Autowired
 	private EnderecoRepository enderecoRepository;
-	
+
 	@Autowired
 	private ReportUtil reportUtil;
 
@@ -117,17 +119,16 @@ public class FuncionarioController {
 			@RequestParam("sexoPesquisa") String sexoPesquisa) {
 
 		List<Funcionario> funcionarios = new ArrayList<Funcionario>();
-		
-		if ((nomePesquisa != null && !nomePesquisa.isEmpty()) 
-				&& (sexoPesquisa != null && !sexoPesquisa.isEmpty())) {
+
+		if ((nomePesquisa != null && !nomePesquisa.isEmpty()) && (sexoPesquisa != null && !sexoPesquisa.isEmpty())) {
 			funcionarios = funcionarioRepository.findByNomeSexo(nomePesquisa.trim().toUpperCase(), sexoPesquisa);
-			
+
 		} else if (sexoPesquisa != null && !sexoPesquisa.isEmpty()) {
 			funcionarios = funcionarioRepository.findBySexo(sexoPesquisa);
 		} else {
 			funcionarios = funcionarioRepository.findByNome(nomePesquisa.trim().toUpperCase());
 		}
-		
+
 		ModelAndView view = new ModelAndView("cadastros/cadastroFuncionario");
 		view.addObject("usuarios", funcionarios);
 		view.addObject("usuario", new Funcionario());
@@ -159,10 +160,10 @@ public class FuncionarioController {
 			List<String> msg = new ArrayList<String>();
 			if (endereco.getDistrito().isEmpty()) {
 				msg.add("Preencha o Campo Distrito!");
-				
+
 			} else if (endereco.getBairro().isEmpty()) {
 				msg.add("Preencha o Campo Bairro");
-				
+
 			} else if (endereco.getTelefone().isEmpty()) {
 				msg.add("Preencha o Campo Telefone");
 			}
@@ -194,5 +195,43 @@ public class FuncionarioController {
 		view.addObject("endereco", enderecoRepository.getEnderecos(usuario.getId()));
 
 		return view;
+	}
+
+	@GetMapping("**/pesquisarUsuario")
+	public void imprimeRelatorio(@RequestParam("nomePesquisa") String nomePesquisa,
+			@RequestParam("sexoPesquisa") String sexoPesquisa, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+
+		List<Funcionario> funcionarios = new ArrayList<Funcionario>();
+
+		if ((nomePesquisa != null && !nomePesquisa.isEmpty()) && (sexoPesquisa != null && !sexoPesquisa.isEmpty())) {
+			funcionarios = funcionarioRepository.findByNomeSexo(nomePesquisa.trim().toUpperCase(), sexoPesquisa);
+
+		} else if (sexoPesquisa != null && !sexoPesquisa.isEmpty()) {
+			funcionarios = funcionarioRepository.findBySexo(sexoPesquisa);
+
+		} else if (nomePesquisa != null && !nomePesquisa.isEmpty()) {
+			funcionarios = funcionarioRepository.findByNome(nomePesquisa.trim().toUpperCase());
+
+		} else {
+			funcionarios = funcionarioRepository.findAll();
+		}
+
+		// Chama o metodo para a geracão do relatório
+		byte[] report = reportUtil.geraRelatorio(funcionarios, "funcionario", request.getServletContext());
+
+		// Tamanho da Resposta ao navegador
+		response.setContentLength(report.length);
+
+		// Define o tipo de resposta ao navegador
+		response.setContentType("application/octet-stream");
+
+		// Define o cabecalho da resposta ao navegador
+		String headerKey = "Content-Disposition";
+		String headerValue = String.format("attachment; filename=\"%s\"", "Relatório de Funcionários.pdf");
+		response.setHeader(headerKey, headerValue);
+
+		// Finaliza a resposta ao navegador
+		response.getOutputStream().write(report);
 	}
 }
