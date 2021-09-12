@@ -6,7 +6,7 @@
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="521"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (2)"/>
 	<queryString language="SQL">
-		<![CDATA[select * from funcionario]]>
+		<![CDATA]>
 	</queryString>
 	<field name="id" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.label" value="id"/>
@@ -16,7 +16,7 @@
 		<property name="com.jaspersoft.studio.field.label" value="bi"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="funcionario"/>
 	</field>
-	<field name="cargo_func" class="java.lang.String">
+	<field name="cargoFunc" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="cargo_func"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="funcionario"/>
 	</field>
