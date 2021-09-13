@@ -46,51 +46,62 @@ fieldset {
   </div>
 </nav>
 
-<fieldset class="scheduler-border">
-	<legend class="scheduler-border">Cadastro de Funcionário</legend>
-	<form action="/salvarUsuario" id="formUser" class="row g-3" method="post" th:object="${usuario}">
-		
-		<div class="alert alert-danger" role="alert" th:each = "m : ${msg}">
-			<span th:text = "${m}"></span>
-		</div>
-		<div class="col-12">
-			<label for="id" class="form-label">ID</label>
-			<input type="text" class="form-control" id="id" readonly="readonly" th:field="*{id}">
-		</div>
-		<div class="col-md-4">
-			<label for="nome" class="form-label">Nome</label> 
-			<input type="text" class="form-control" name="nomee" placeholder="Exemplo: Monkey D. Luffy" th:field="*{nome}">
-		</div>
-		<div class="col-md-4">
-			<label for="bi" class="form-label">BI</label>
-			<input type="text" class="form-control" name="bi" placeholder="Exemplo: 100213123419M" th:field="*{bi}">
-		</div>
-		<div class="col-md-4">
-			<label for="sexo" class="form-label">Sexo</label>
-			<select class="form-control text-center" name="sexo" th:field = "*{sexo}">
-			 	<option value="" th:text = "--[SELECIONE]--">
-				<option value="MASCULIUNO" th:text = "Masculino"/>
-				<option value="FEMININO" th:text = "Feminino"/>
-				<option value="OUTRO" th:text = "Outro">
-			</select>
-		</div>
-		<div class="col-md-6" sec:authorize="hasRole('ROLE_ADMIN')">
-			<label for="email" class="form-label">Email</label> 
-			<input type="email" class="form-control" name="email" placeholder="Exemplo: luffy@gmail.com" th:field="*{email}">
-		</div>
-		<div class="col-md-6">
-			<label for="email" class="form-label">Cargo</label> 
-			<input type="text" class="form-control" id="cargoFunc" name="cargoFunc" placeholder="Exemplo: Backend Developer" th:field="*{cargoFunc}">
-	    </div>
-		
-		
-	    <div class="col-md-12">
-	    	<button type="submit" class="btn btn-primary">Salvar</button>
-	    	<a href="/cadastroFuncionario" class="btn btn-secondary" onclick="document.getElementById('formUser').reset()">Cancelar</a>
-	    </div>
-	</form>
-</fieldset>
-	
+	<fieldset class="scheduler-border">
+		<legend class="scheduler-border">Cadastro de Funcionário</legend>
+		<form action="/salvarUsuario" id="formUser" class="row g-3" method="post" th:object="${usuario}">
+
+			<div class="alert alert-danger" role="alert" th:each="m : ${msg}">
+				<span th:text="${m}"></span>
+			</div>
+			<div class="col-12">
+				<label for="id" class="form-label">ID</label>
+				 <input type="text"	class="form-control" id="id" readonly="readonly" th:field="*{id}">
+			</div>
+			<div class="col-md-4">
+				<label for="nome" class="form-label">Nome</label>
+				 <input type="text"	class="form-control" name="nomee" placeholder="Exemplo: Monkey D. Luffy" th:field="*{nome}">
+			</div>
+			<div class="col-md-4">
+				<label for="bi" class="form-label">BI</label>
+				 <input type="text"	class="form-control" name="bi" placeholder="Exemplo: 100213123419M"	th:field="*{bi}">
+			</div>
+			<div class="col-md-4">
+				<label for="sexo" class="form-label">Sexo</label>
+				 <select class="form-select text-center" name="sexo" th:field="*{sexo}">
+					<option value="">--[Selecione o Sexo]--</option>
+					<option value="MASCULIUNO" th:text="Masculino" />
+					<option value="FEMININO" th:text="Feminino" />
+					<option value="OUTRO" th:text="Outro">
+				</select>
+			</div>
+			<div class="col-md-4" sec:authorize="hasRole('ROLE_ADMIN')">
+				<label for="email" class="form-label">Email</label>
+				 <input	type="email" class="form-control" name="email" placeholder="Exemplo: luffy@gmail.com" th:field="*{email}">
+			</div>
+			<div class="col-md-4">
+				<label for="profissao" class="form-label">Profissão</label>
+				<select class="form-select text-center" name="profissao" th:field="*{profissao}">
+					<option value="">--[Selecione a Profissão]--</option>
+					<option th:each="p : ${profissoes}" th:value="${p.id}" th:text="${p.nome}">				
+				</select>
+			</div>
+			<div class="col-md-4">
+				<label for="email" class="form-label">Cargo</label>
+				<select class="form-select text-center" name="cargoFunc" th:field="*{cargoFunc}">
+					<option value="">--[Selecione o Cargo]--</option>					
+					<option th:each="c : ${T(com.bbm.register.model.enums.Cargo).values()}" th:value="${c}" th:text="${c.nome}">		
+				</select>				
+			</div>
+
+
+			<div class="col-md-12">
+				<button type="submit" class="btn btn-primary">Salvar</button>
+				<a href="/cadastroFuncionario" class="btn btn-secondary"
+					onclick="document.getElementById('formUser').reset()">Cancelar</a>
+			</div>
+		</form>
+	</fieldset>
+
 	<fieldset style = " border: 1px solid #999">
 	<legend>Campo de Pesquisa</legend>
 	<form action="/pesquisarUsuario" class="row g-3" method="post" id="pesquisarUsuario">
@@ -100,7 +111,7 @@ fieldset {
 	    </div>
 	    <div class="col-md-6" style="margin-top: 0%">
 			<!-- <label for="sexoPesquisa" class="form-label">Sexo</label> -->
-			<select class="form-control text-center" name="sexoPesquisa">
+			<select class="form-select text-center" name="sexoPesquisa">
 			 	<option value="">--[Selecione o Sexo do Funcionário para Pesquisa]--</option>
 				<option value="MASCULIUNO" th:text = "Masculino"/>
 				<option value="FEMININO" th:text = "Feminino"/>
