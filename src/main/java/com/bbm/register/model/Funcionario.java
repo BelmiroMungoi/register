@@ -6,6 +6,8 @@ import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import com.bbm.register.model.enums.Cargo;
 
 @Entity
 public class Funcionario implements Serializable {
@@ -38,9 +42,8 @@ public class Funcionario implements Serializable {
 	@Email(message = "Email inválido")
 	private String email;
 
-	@NotNull(message = "Cargo não pode ser nulo! Insira o Cargo.")
-	@NotEmpty(message = "Cargo não pode ser vazio! Insira a Cargo.")
-	private String cargoFunc;
+	@Enumerated(EnumType.STRING)
+	private Cargo cargoFunc;
 
 	private String sexo;
 
@@ -49,6 +52,9 @@ public class Funcionario implements Serializable {
 
 	@ManyToOne
 	private Usuario boss;
+
+	@ManyToOne
+	private Profissao profissao;
 
 	public Long getId() {
 		return id;
@@ -82,11 +88,11 @@ public class Funcionario implements Serializable {
 		this.email = email;
 	}
 
-	public String getCargoFunc() {
+	public Cargo getCargoFunc() {
 		return cargoFunc;
 	}
 
-	public void setCargoFunc(String cargoFunc) {
+	public void setCargoFunc(Cargo cargoFunc) {
 		this.cargoFunc = cargoFunc;
 	}
 
@@ -112,6 +118,14 @@ public class Funcionario implements Serializable {
 
 	public void setUsuario(Usuario boss) {
 		this.boss = boss;
+	}
+
+	public Profissao getProfissao() {
+		return profissao;
+	}
+
+	public void setProfissao(Profissao profissao) {
+		this.profissao = profissao;
 	}
 
 	@Override
