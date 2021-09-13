@@ -20,11 +20,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bbm.register.model.Funcionario;
 import com.bbm.register.model.FuncionarioEndereco;
 import com.bbm.register.reports.ReportUtil;
-import com.bbm.register.model.Funcionario;
 import com.bbm.register.repository.EnderecoRepository;
 import com.bbm.register.repository.FuncionarioRepository;
+import com.bbm.register.repository.ProfissaoRepository;
 
 @Controller
 public class FuncionarioController {
@@ -37,12 +38,16 @@ public class FuncionarioController {
 
 	@Autowired
 	private ReportUtil reportUtil;
+	
+	@Autowired
+	private ProfissaoRepository profissaoRepository;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastroFuncionario")
 	public ModelAndView init() {
 		ModelAndView view = new ModelAndView("cadastros/cadastroFuncionario");
 
 		view.addObject("usuarios", funcionarioRepository.findAll());
+		view.addObject("profissoes", profissaoRepository.findAll());
 		view.addObject("usuario", new Funcionario());
 
 		return view;
@@ -57,6 +62,7 @@ public class FuncionarioController {
 			ModelAndView andView = new ModelAndView("cadastros/cadastroFuncionario");
 			Iterable<Funcionario> funcionarios = funcionarioRepository.findAll();
 			andView.addObject("usuarios", funcionarios);
+			andView.addObject("profissoes", profissaoRepository.findAll());
 			andView.addObject("usuario", funcionario);
 
 			List<String> msg = new ArrayList<String>();
@@ -78,6 +84,7 @@ public class FuncionarioController {
 			ModelAndView view = new ModelAndView("cadastros/cadastroFuncionario");
 			Iterable<Funcionario> usuarios = funcionarioRepository.findAll();
 			view.addObject("usuarios", usuarios);
+			view.addObject("profissoes", profissaoRepository.findAll());
 			view.addObject("usuario", new Funcionario());
 
 			return view;
@@ -89,6 +96,7 @@ public class FuncionarioController {
 		ModelAndView view = new ModelAndView("cadastros/cadastroFuncionario");
 		Iterable<Funcionario> usuarios = funcionarioRepository.findAll();
 		view.addObject("usuarios", usuarios);
+		view.addObject("profissoes", profissaoRepository.findAll());
 		view.addObject("usuario", new Funcionario());
 
 		return view;
@@ -99,6 +107,7 @@ public class FuncionarioController {
 		Optional<Funcionario> usuario = funcionarioRepository.findById(idUser);
 
 		ModelAndView view = new ModelAndView("cadastros/cadastroFuncionario");
+		view.addObject("profissoes", profissaoRepository.findAll());
 		view.addObject("usuario", usuario.get());
 		return view;
 	}
@@ -109,6 +118,7 @@ public class FuncionarioController {
 
 		ModelAndView view = new ModelAndView("cadastros/cadastroFuncionario");
 		view.addObject("usuarios", funcionarioRepository.findAll());
+		view.addObject("profissoes", profissaoRepository.findAll());
 		view.addObject("usuario", new Funcionario());
 
 		return view;
@@ -131,6 +141,7 @@ public class FuncionarioController {
 
 		ModelAndView view = new ModelAndView("cadastros/cadastroFuncionario");
 		view.addObject("usuarios", funcionarios);
+		view.addObject("profissoes", profissaoRepository.findAll());
 		view.addObject("usuario", new Funcionario());
 
 		return view;
@@ -142,6 +153,7 @@ public class FuncionarioController {
 
 		ModelAndView view = new ModelAndView("cadastros/endereco");
 		view.addObject("endereco", enderecoRepository.getEnderecos(idUser));
+		view.addObject("profissoes", profissaoRepository.findAll());
 		view.addObject("usuario", usuario.get());
 
 		return view;
@@ -155,6 +167,7 @@ public class FuncionarioController {
 				|| endereco.getTelefone().isEmpty()) {
 			ModelAndView view = new ModelAndView("cadastros/endereco");
 			view.addObject("usuario", usuario);
+			view.addObject("profissoes", profissaoRepository.findAll());
 			view.addObject("endereco", enderecoRepository.getEnderecos(idUser));
 
 			List<String> msg = new ArrayList<String>();
