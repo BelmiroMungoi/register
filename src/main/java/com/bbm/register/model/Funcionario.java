@@ -1,6 +1,7 @@
 package com.bbm.register.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,9 +15,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.bbm.register.model.enums.Cargo;
 
@@ -41,6 +46,10 @@ public class Funcionario implements Serializable {
 	@NotEmpty(message = "Email não pode ser vazio! Insira o Email.")
 	@Email(message = "Email inválido")
 	private String email;
+
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Temporal(TemporalType.DATE)
+	private Date dataNasc;
 
 	@Enumerated(EnumType.STRING)
 	private Cargo cargoFunc;
@@ -86,6 +95,14 @@ public class Funcionario implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Date getDataNasc() {
+		return dataNasc;
+	}
+
+	public void setDataNasc(Date dataNasc) {
+		this.dataNasc = dataNasc;
 	}
 
 	public Cargo getCargoFunc() {
