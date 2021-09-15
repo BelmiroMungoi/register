@@ -1,5 +1,6 @@
 package com.bbm.register.controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bbm.register.model.Funcionario;
@@ -26,6 +28,8 @@ import com.bbm.register.reports.ReportUtil;
 import com.bbm.register.repository.EnderecoRepository;
 import com.bbm.register.repository.FuncionarioRepository;
 import com.bbm.register.repository.ProfissaoRepository;
+
+import ch.qos.logback.core.joran.conditional.IfAction;
 
 @Controller
 public class FuncionarioController {
@@ -38,7 +42,7 @@ public class FuncionarioController {
 
 	@Autowired
 	private ReportUtil reportUtil;
-	
+
 	@Autowired
 	private ProfissaoRepository profissaoRepository;
 
@@ -53,8 +57,9 @@ public class FuncionarioController {
 		return view;
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "**/salvarUsuario")
-	public ModelAndView salvarUsuario(@Valid Funcionario funcionario, BindingResult bindingResult) {
+	@RequestMapping(method = RequestMethod.POST, value = "**/salvarUsuario", consumes = { "multipart/form-data" })
+	public ModelAndView salvarUsuario(@Valid Funcionario funcionario, BindingResult bindingResult, MultipartFile file)
+			throws IOException {
 
 		// Caso haja algum erro
 		if (bindingResult.hasErrors()) {
@@ -77,7 +82,16 @@ public class FuncionarioController {
 			return andView;
 
 		} else {
-
+			//Verificando se existe um ficheiro para gravacao
+			if (file.getSize() > 0) {
+				funcionario.setCurriculo(file.getBytes());
+			/*Caso esteja em edicao e ja exista um curriculo associado ao usuario	
+			 Pega o curriculo existente e guarda*/
+			} else if (funcionario.getId() != null && funcionario.getId() > 0) {
+				byte[] temp = funcionarioRepository.findById(funcionario.getId())
+						.get().getCurriculo();
+				funcionario.setCurriculo(temp);
+			}
 			funcionarioRepository.save(funcionario);
 
 			// Após salvar os dados irá exibir na tela
