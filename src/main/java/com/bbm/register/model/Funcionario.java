@@ -13,6 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -55,6 +56,9 @@ public class Funcionario implements Serializable {
 	private Cargo cargoFunc;
 
 	private String sexo;
+
+	@Lob
+	private byte[] curriculo;
 
 	@OneToMany(mappedBy = "funcionario", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<FuncionarioEndereco> endereco;
@@ -119,6 +123,14 @@ public class Funcionario implements Serializable {
 
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
+	}
+
+	public byte[] getCurriculo() {
+		return curriculo;
+	}
+
+	public void setCurriculo(byte[] curriculo) {
+		this.curriculo = curriculo;
 	}
 
 	public List<FuncionarioEndereco> getEndereco() {
