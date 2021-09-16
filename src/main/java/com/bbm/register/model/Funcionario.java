@@ -60,6 +60,9 @@ public class Funcionario implements Serializable {
 	@Lob
 	private byte[] curriculo;
 
+	private String originalFileName;
+	private String fileType;
+
 	@OneToMany(mappedBy = "funcionario", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<FuncionarioEndereco> endereco;
 
@@ -127,6 +130,22 @@ public class Funcionario implements Serializable {
 
 	public byte[] getCurriculo() {
 		return curriculo;
+	}
+
+	public String getOriginalFileName() {
+		return originalFileName;
+	}
+
+	public void setOriginalFileName(String originalFileName) {
+		this.originalFileName = originalFileName;
+	}
+
+	public String getFileType() {
+		return fileType;
+	}
+
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
 	}
 
 	public void setCurriculo(byte[] curriculo) {
