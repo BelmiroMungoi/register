@@ -55,7 +55,11 @@ fieldset {
 				<p>	Data de Nascimento: <b><span th:text="${user.dataNasc}"></span></b></p>
 			</div>
 			<div class="col-md-4">
-				<p> Curriculo: <b><a th:href="@{/baixarCurriculo/{idUser}(idUser=${usuario.id})}">Download</a></b></p>
+				<p> Email: <b><span th:text="${user.email}"></span></b></p>
+				<p> Currículo: <b>
+					<a th:if="${user.curriculo != null}" th:href="@{/baixarCurriculo/{idUser}(idUser=${usuario.id})}">Download</a>
+					<a th:if="${user.curriculo == null}"> Não há Currículo</a>
+				</b></p>
 			</div>
 		</div>
 	</fieldset>
