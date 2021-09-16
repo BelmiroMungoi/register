@@ -29,8 +29,6 @@ import com.bbm.register.repository.EnderecoRepository;
 import com.bbm.register.repository.FuncionarioRepository;
 import com.bbm.register.repository.ProfissaoRepository;
 
-import ch.qos.logback.core.joran.conditional.IfAction;
-
 @Controller
 public class FuncionarioController {
 
@@ -85,12 +83,16 @@ public class FuncionarioController {
 			//Verificando se existe um ficheiro para gravacao
 			if (file.getSize() > 0) {
 				funcionario.setCurriculo(file.getBytes());
+				funcionario.setFileType(file.getContentType());
+				funcionario.setOriginalFileName(file.getOriginalFilename());
+				
 			/*Caso esteja em edicao e ja exista um curriculo associado ao usuario	
 			 Pega o curriculo existente e guarda*/
 			} else if (funcionario.getId() != null && funcionario.getId() > 0) {
-				byte[] temp = funcionarioRepository.findById(funcionario.getId())
-						.get().getCurriculo();
-				funcionario.setCurriculo(temp);
+				Funcionario temp = funcionarioRepository.findById(funcionario.getId()).get();
+				funcionario.setCurriculo(temp.getCurriculo());
+				funcionario.setFileType(temp.getFileType());
+				funcionario.setOriginalFileName(temp.getOriginalFileName());
 			}
 			funcionarioRepository.save(funcionario);
 
@@ -260,5 +262,15 @@ public class FuncionarioController {
 
 		// Finaliza a resposta ao navegador
 		response.getOutputStream().write(report);
+	}
+	
+	@GetMapping("**/baixarCurriculo/{idUser}")
+	public void baixarCurriculo(@PathVariable("idUser") Long idUser, HttpServletResponse response) {
+		
+		Funcionario funcionario = funcionarioRepository.findById(idUser).get();
+		
+		if (funcionario.getCurriculo() != null) {
+			
+		}
 	}
 }
