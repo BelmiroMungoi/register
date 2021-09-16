@@ -265,12 +265,25 @@ public class FuncionarioController {
 	}
 	
 	@GetMapping("**/baixarCurriculo/{idUser}")
-	public void baixarCurriculo(@PathVariable("idUser") Long idUser, HttpServletResponse response) {
+	public void baixarCurriculo(@PathVariable("idUser") Long idUser, HttpServletResponse response) throws IOException {
 		
 		Funcionario funcionario = funcionarioRepository.findById(idUser).get();
 		
+		//Verifica se existe o curriculo para o download
 		if (funcionario.getCurriculo() != null) {
 			
+			//Seta o tamanho da resposta
+			response.setContentLength(funcionario.getCurriculo().length);
+			
+			//Seta o tipo do arquivo para o download
+			response.setContentType(funcionario.getFileType());
+			
+			//Seta o cabecalho da resposta
+			String headerKey = "Content-Disposition";
+			String headerValue = String.format("attachment; filename=\"%s\"", funcionario.getOriginalFileName());
+			response.setHeader(headerKey, headerValue);
+			
+			response.getOutputStream().write(funcionario.getCurriculo());
 		}
 	}
 }
