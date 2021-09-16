@@ -37,20 +37,28 @@ fieldset {
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="#">Action</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Sair</a></li>
+            <li><a class="dropdown-item" href="/logout">Sair</a></li>
           </ul>
         </div>
      </div>
   </div>
 </nav>
-<fieldset>
-	<div th:each="user : ${usuario}">
-		<div>
-			<p>ID: <b><span th:text="${user.id}"></span></b></p>
-			<p>Nome: <b><span th:text="${user.nome}"></span></b></p>
+	<fieldset>
+		<legend>Dados do Funcionário</legend>
+		<div th:each="user : ${usuario}" class="row">
+			<div class="col-md-4">
+				<p>	ID: <b><span th:text="${user.id}"></span></b></p>
+				<p>	Nome: <b><span th:text="${user.nome}"></span></b></p>
+			</div>
+			<div class="col-md-4">
+				<p>	Cargo: <b><span th:text="${user.cargoFunc}"></span></b></p>
+				<p>	Data de Nascimento: <b><span th:text="${user.dataNasc}"></span></b></p>
+			</div>
+			<div class="col-md-4">
+				<p> Curriculo: <b><a th:href="@{/baixarCurriculo/{idUser}(idUser=${usuario.id})}">Download</a></b></p>
+			</div>
 		</div>
-	</div>
-</fieldset>
+	</fieldset>
 	<div>
 	<fieldset>
 			<legend>Cadastro de Endereco</legend>
@@ -59,15 +67,15 @@ fieldset {
 					<span th:text="${m}"></span>
 				</div>
 				<div class="col-md-4">
-					<label for="distrito" class="form-label">Distrito</label>
+					 <label for="distrito" class="form-label">Distrito</label>
 					 <input	type="text" class="form-control" name="distrito" placeholder="Exemplo: Matola">
 				</div>
 				<div class="col-md-4">
-					<label for="bairro" class="form-label">Bairro</label>
+					 <label for="bairro" class="form-label">Bairro</label>
 					 <input	type="text" class="form-control" name="bairro" placeholder="Exemplo: Fomento">
 				</div>
 				<div class="col-md-4">
-					<label for="telefone" class="form-label">Telefone</label>
+					 <label for="telefone" class="form-label">Telefone</label>
 					 <input	type="number" class="form-control" name="telefone" placeholder="Exemplo: 865765412">
 				</div>
 				<div class="col-md-12">
