@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -47,8 +49,8 @@ public class FuncionarioController {
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastroFuncionario")
 	public ModelAndView init() {
 		ModelAndView view = new ModelAndView("cadastros/cadastroFuncionario");
-
-		view.addObject("usuarios", funcionarioRepository.findAll());
+		//Vai carregar somente 5 funcionarios ao iniciar
+		view.addObject("usuarios", funcionarioRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
 		view.addObject("profissoes", profissaoRepository.findAll());
 		view.addObject("usuario", new Funcionario());
 
@@ -63,8 +65,7 @@ public class FuncionarioController {
 		if (bindingResult.hasErrors()) {
 			// Vai retornar para a mesma com a messagem de erro
 			ModelAndView andView = new ModelAndView("cadastros/cadastroFuncionario");
-			Iterable<Funcionario> funcionarios = funcionarioRepository.findAll();
-			andView.addObject("usuarios", funcionarios);
+			andView.addObject("usuarios", funcionarioRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
 			andView.addObject("profissoes", profissaoRepository.findAll());
 			andView.addObject("usuario", funcionario);
 
@@ -98,8 +99,7 @@ public class FuncionarioController {
 
 			// Após salvar os dados irá exibir na tela
 			ModelAndView view = new ModelAndView("cadastros/cadastroFuncionario");
-			Iterable<Funcionario> usuarios = funcionarioRepository.findAll();
-			view.addObject("usuarios", usuarios);
+			view.addObject("usuarios", funcionarioRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
 			view.addObject("profissoes", profissaoRepository.findAll());
 			view.addObject("usuario", new Funcionario());
 
@@ -110,8 +110,7 @@ public class FuncionarioController {
 	@RequestMapping(method = RequestMethod.GET, value = "/listarUsuario")
 	public ModelAndView listarUsuario() {
 		ModelAndView view = new ModelAndView("cadastros/cadastroFuncionario");
-		Iterable<Funcionario> usuarios = funcionarioRepository.findAll();
-		view.addObject("usuarios", usuarios);
+		view.addObject("usuarios", funcionarioRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
 		view.addObject("profissoes", profissaoRepository.findAll());
 		view.addObject("usuario", new Funcionario());
 
@@ -133,7 +132,7 @@ public class FuncionarioController {
 		funcionarioRepository.deleteById(idUser);
 
 		ModelAndView view = new ModelAndView("cadastros/cadastroFuncionario");
-		view.addObject("usuarios", funcionarioRepository.findAll());
+		view.addObject("usuarios", funcionarioRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
 		view.addObject("profissoes", profissaoRepository.findAll());
 		view.addObject("usuario", new Funcionario());
 
@@ -151,6 +150,7 @@ public class FuncionarioController {
 
 		} else if (sexoPesquisa != null && !sexoPesquisa.isEmpty()) {
 			funcionarios = funcionarioRepository.findBySexo(sexoPesquisa);
+			
 		} else {
 			funcionarios = funcionarioRepository.findByNome(nomePesquisa.trim().toUpperCase());
 		}
