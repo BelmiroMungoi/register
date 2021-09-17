@@ -10,8 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -49,11 +52,22 @@ public class FuncionarioController {
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastroFuncionario")
 	public ModelAndView init() {
 		ModelAndView view = new ModelAndView("cadastros/cadastroFuncionario");
-		//Vai carregar somente 5 funcionarios ao iniciar
+		// Vai carregar somente 5 funcionarios ao iniciar
 		view.addObject("usuarios", funcionarioRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
 		view.addObject("profissoes", profissaoRepository.findAll());
 		view.addObject("usuario", new Funcionario());
 
+		return view;
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/funcionariosPag")
+	public ModelAndView loadWithPag(@PageableDefault(size = 5, sort = "nome") Pageable pageable, ModelAndView view) {
+
+		Page<Funcionario> page = funcionarioRepository.findAll(pageable);
+		view.addObject("usuarios", page);
+		view.addObject("usuario", new Funcionario());
+		view.setViewName("cadastros/cadastroFuncionario");
+		
 		return view;
 	}
 
@@ -81,14 +95,16 @@ public class FuncionarioController {
 			return andView;
 
 		} else {
-			//Verificando se existe um ficheiro para gravacao
+			// Verificando se existe um ficheiro para gravacao
 			if (file.getSize() > 0) {
 				funcionario.setCurriculo(file.getBytes());
 				funcionario.setFileType(file.getContentType());
 				funcionario.setOriginalFileName(file.getOriginalFilename());
-				
-			/*Caso esteja em edicao e ja exista um curriculo associado ao usuario	
-			 Pega o curriculo existente e guarda*/
+
+				/*
+				 * Caso esteja em edicao e ja exista um curriculo associado ao usuario Pega o
+				 * curriculo existente e guarda
+				 */
 			} else if (funcionario.getId() != null && funcionario.getId() > 0) {
 				Funcionario temp = funcionarioRepository.findById(funcionario.getId()).get();
 				funcionario.setCurriculo(temp.getCurriculo());
@@ -150,7 +166,7 @@ public class FuncionarioController {
 
 		} else if (sexoPesquisa != null && !sexoPesquisa.isEmpty()) {
 			funcionarios = funcionarioRepository.findBySexo(sexoPesquisa);
-			
+
 		} else {
 			funcionarios = funcionarioRepository.findByNome(nomePesquisa.trim().toUpperCase());
 		}
@@ -263,26 +279,26 @@ public class FuncionarioController {
 		// Finaliza a resposta ao navegador
 		response.getOutputStream().write(report);
 	}
-	
+
 	@GetMapping("**/baixarCurriculo/{idUser}")
 	public void baixarCurriculo(@PathVariable("idUser") Long idUser, HttpServletResponse response) throws IOException {
-		
+
 		Funcionario funcionario = funcionarioRepository.findById(idUser).get();
-		
-		//Verifica se existe o curriculo para o download
+
+		// Verifica se existe o curriculo para o download
 		if (funcionario.getCurriculo() != null) {
-			
-			//Seta o tamanho da resposta
+
+			// Seta o tamanho da resposta
 			response.setContentLength(funcionario.getCurriculo().length);
-			
-			//Seta o tipo do arquivo para o download
+
+			// Seta o tipo do arquivo para o download
 			response.setContentType(funcionario.getFileType());
-			
-			//Seta o cabecalho da resposta
+
+			// Seta o cabecalho da resposta
 			String headerKey = "Content-Disposition";
 			String headerValue = String.format("attachment; filename=\"%s\"", funcionario.getOriginalFileName());
 			response.setHeader(headerKey, headerValue);
-			
+
 			response.getOutputStream().write(funcionario.getCurriculo());
 		}
 	}
