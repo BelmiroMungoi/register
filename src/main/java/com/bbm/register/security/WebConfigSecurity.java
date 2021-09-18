@@ -2,6 +2,7 @@ package com.bbm.register.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -25,7 +26,7 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter{
 		.disable() // Desativa as configuracões padrão de memoria
 		.authorizeRequests() // Permite restringir acesso
 		
-		//.antMatchers(HttpMethod.GET, "/login").permitAll() // Qualquer usuario pode acessar a pagina de login
+		.antMatchers(HttpMethod.GET, "/login").permitAll() // Qualquer usuario pode acessar a pagina de login
 		//.antMatchers(HttpMethod.GET, "/cadastroFuncionario").hasAnyRole("ADMIN")
 		//.antMatchers("/css/**").permitAll()
 		.anyRequest().authenticated() // Entra na autenticacão
