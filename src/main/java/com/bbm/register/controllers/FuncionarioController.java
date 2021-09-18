@@ -61,7 +61,8 @@ public class FuncionarioController {
 	}
 
 	@GetMapping("/funcionariosPag")
-	public ModelAndView loadWithPag(@PageableDefault(size = 5, sort = "nome") Pageable pageable, ModelAndView view, @RequestParam("nomePesquisa") String nomePesquisa) {
+	public ModelAndView loadWithPag(@PageableDefault(size = 5, sort = "nome") Pageable pageable, ModelAndView view,
+			@RequestParam("nomePesquisa") String nomePesquisa) {
 
 		Page<Funcionario> page = funcionarioRepository.findAll(pageable);
 		view.addObject("usuarios", page);
@@ -163,10 +164,10 @@ public class FuncionarioController {
 		Page<Funcionario> funcionarios = null;
 
 		if ((nomePesquisa != null && !nomePesquisa.isEmpty()) && (sexoPesquisa != null && !sexoPesquisa.isEmpty())) {
-			//funcionarios = funcionarioRepository.findByNomeSexo(nomePesquisa.trim().toUpperCase(), sexoPesquisa);
+			funcionarios = funcionarioRepository.findByNameSex(nomePesquisa, sexoPesquisa, pageable);
 
 		} else if (sexoPesquisa != null && !sexoPesquisa.isEmpty()) {
-			//funcionarios = funcionarioRepository.findBySexo(sexoPesquisa);
+			funcionarios = funcionarioRepository.findBySex(sexoPesquisa, pageable);
 
 		} else {
 			funcionarios = funcionarioRepository.findByName(nomePesquisa, pageable);
