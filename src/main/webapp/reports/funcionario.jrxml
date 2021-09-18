@@ -6,30 +6,12 @@
 	<queryString language="SQL">
 		<![CDATA[]]>
 	</queryString>
-	<field name="id" class="java.lang.Long">
-		<property name="com.jaspersoft.studio.field.label" value="id"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="funcionario"/>
-	</field>
-	<field name="bi" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="bi"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="funcionario"/>
-	</field>
-	<field name="cargoFunc" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="cargo_func"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="funcionario"/>
-	</field>
-	<field name="email" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="email"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="funcionario"/>
-	</field>
-	<field name="nome" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="nome"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="funcionario"/>
-	</field>
-	<field name="sexo" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="sexo"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="funcionario"/>
-	</field>
+	<field name="id" class="java.lang.Long"/>
+	<field name="bi" class="java.lang.String"/>
+	<field name="dataNasc" class="java.util.Date"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="sexo" class="java.lang.String"/>
 	<background>
 		<band/>
 	</background>
@@ -55,7 +37,7 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="13"/>
+		<band height="11"/>
 	</pageHeader>
 	<columnHeader>
 		<band height="21">
@@ -102,8 +84,11 @@
 				<textElement>
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Cargo]]></text>
+				<text><![CDATA[Data de Nacimento]]></text>
 			</staticText>
+			<line>
+				<reportElement x="0" y="20" width="575" height="1" uuid="09d5d1f2-b8fb-4d09-87ec-82812ffc7fa1"/>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>
@@ -136,15 +121,6 @@
 				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="440" y="0" width="135" height="30" uuid="637d625a-4d84-4dab-8ab1-18962815f5ad">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2bf2e9e6-0973-4c24-be16-65b24ab70cbe"/>
-				</reportElement>
-				<textElement>
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{cargoFunc}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="181" y="-1" width="113" height="30" uuid="2e5f2427-f502-46e8-bf78-860780552f50">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4c3649d5-dbd0-4ca2-a2a4-d09729f21b31"/>
 				</reportElement>
@@ -152,6 +128,15 @@
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{bi}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMM d, yyyy">
+				<reportElement x="440" y="0" width="135" height="30" uuid="88196c52-fe42-407a-a3c5-4dc462b47db4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="15f7bedb-0b73-4aa2-b807-13223ff37b6d"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataNasc}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
