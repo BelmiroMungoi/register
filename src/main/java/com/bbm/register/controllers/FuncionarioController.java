@@ -60,8 +60,8 @@ public class FuncionarioController {
 		return view;
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/funcionariosPag")
-	public ModelAndView loadWithPag(@PageableDefault(size = 5, sort = "nome") Pageable pageable, ModelAndView view) {
+	@GetMapping("/funcionariosPag")
+	public ModelAndView loadWithPag(@PageableDefault(size = 5, sort = "nome") Pageable pageable, ModelAndView view, @RequestParam("nomePesquisa") String nomePesquisa) {
 
 		Page<Funcionario> page = funcionarioRepository.findAll(pageable);
 		view.addObject("usuarios", page);
@@ -157,24 +157,26 @@ public class FuncionarioController {
 
 	@PostMapping("**/pesquisarUsuario")
 	public ModelAndView pesquisarUsuario(@RequestParam("nomePesquisa") String nomePesquisa,
-			@RequestParam("sexoPesquisa") String sexoPesquisa) {
+			@RequestParam("sexoPesquisa") String sexoPesquisa,
+			@PageableDefault(size = 5, sort = "nome") Pageable pageable) {
 
-		List<Funcionario> funcionarios = new ArrayList<Funcionario>();
+		Page<Funcionario> funcionarios = null;
 
 		if ((nomePesquisa != null && !nomePesquisa.isEmpty()) && (sexoPesquisa != null && !sexoPesquisa.isEmpty())) {
-			funcionarios = funcionarioRepository.findByNomeSexo(nomePesquisa.trim().toUpperCase(), sexoPesquisa);
+			//funcionarios = funcionarioRepository.findByNomeSexo(nomePesquisa.trim().toUpperCase(), sexoPesquisa);
 
 		} else if (sexoPesquisa != null && !sexoPesquisa.isEmpty()) {
-			funcionarios = funcionarioRepository.findBySexo(sexoPesquisa);
+			//funcionarios = funcionarioRepository.findBySexo(sexoPesquisa);
 
 		} else {
-			funcionarios = funcionarioRepository.findByNome(nomePesquisa.trim().toUpperCase());
+			funcionarios = funcionarioRepository.findByName(nomePesquisa, pageable);
 		}
 
 		ModelAndView view = new ModelAndView("cadastros/cadastroFuncionario");
 		view.addObject("usuarios", funcionarios);
 		view.addObject("profissoes", profissaoRepository.findAll());
 		view.addObject("usuario", new Funcionario());
+		view.addObject("nomePesquisa", nomePesquisa);
 
 		return view;
 	}
