@@ -1,0 +1,16 @@
+com\bbm\register\model\FuncionarioEndereco.class
+com\bbm\register\model\Profissao.class
+com\bbm\register\repository\UsuarioRepository.class
+com\bbm\register\repository\ProfissaoRepository.class
+com\bbm\register\model\enums\Cargo.class
+com\bbm\register\repository\FuncionarioRepository.class
+com\bbm\register\model\Funcionario.class
+com\bbm\register\model\Roles.class
+com\bbm\register\controllers\FuncionarioController.class
+com\bbm\register\RegisterApplication.class
+com\bbm\register\repository\EnderecoRepository.class
+com\bbm\register\model\Usuario.class
+com\bbm\register\controllers\IndexController.class
+com\bbm\register\reports\ReportUtil.class
+com\bbm\register\service\ImplementsUserDetailsService.class
+com\bbm\register\security\WebConfigSecurity.class
