@@ -44,7 +44,7 @@ fieldset {
 	</nav>
 
 	<fieldset class="scheduler-border">
-		<legend class="scheduler-border">Cadastro de Funcionário</legend>
+		
 		<form action="/salvarUsuario" id="formUser" class="row g-3" method="post" th:object="${usuario}" enctype="multipart/form-data">
 
 			<div class="alert alert-danger" role="alert" th:each="m : ${msg}">
