@@ -28,7 +28,7 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter{
 		
 		.antMatchers(HttpMethod.GET, "/login").permitAll() // Qualquer usuario pode acessar a pagina de login
 		//.antMatchers(HttpMethod.GET, "/cadastroFuncionario").hasAnyRole("ADMIN")
-		//.antMatchers("/css/**").permitAll()
+		.antMatchers("/css/**").permitAll()
 		.anyRequest().authenticated() // Entra na autenticacão
 		.and().formLogin().permitAll() // Cria o formulario de login e permite o acesso
 		.loginPage("/login")
@@ -55,7 +55,7 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter{
 	
 	@Override // Ignora URL especificas
 	public void configure(WebSecurity web) throws Exception {
-		 //web.ignoring().antMatchers("/css/**")
+		 web.ignoring().antMatchers("/css/**");
 		//.antMatchers(HttpMethod.GET, "/resources/**", "/static/**", "/css/**", "**/css/**", "/**");
 	}
 }
