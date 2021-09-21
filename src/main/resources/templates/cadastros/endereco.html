@@ -68,8 +68,11 @@ fieldset {
 	<fieldset>
 			<legend>Cadastro de Endereco</legend>
 			<form th:action="@{/addEndereco/{idUser}(idUser=${usuario.id})}" class="row g-3" method="post">
-				<div th:each="m : ${msg}">
+				<div class="alert alert-danger" th:each="m : ${msg}">
 					<span th:text="${m}"></span>
+				</div>
+				<div class="alert alert-success" role="alert" th:each="ms : ${ms}">
+					<span th:text="${ms}"></span>
 				</div>
 				<div class="col-md-4">
 					 <label for="distrito" class="form-label">Distrito</label>
