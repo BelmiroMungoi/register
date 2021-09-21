@@ -51,6 +51,9 @@ fieldset {
 			<div class="alert alert-danger" role="alert" th:each="m : ${msg}">
 				<span th:text="${m}"></span>
 			</div>
+			<div class="alert alert-success" role="alert" th:each="ms : ${ms}">
+				<span th:text="${ms}"></span>
+			</div>
 			<div class="col-12">
 				<label for="id" class="form-label">ID</label>
 				 <input type="text"	class="form-control" id="id" readonly="readonly" th:field="*{id}">
