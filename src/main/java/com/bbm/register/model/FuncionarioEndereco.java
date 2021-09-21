@@ -2,9 +2,9 @@ package com.bbm.register.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,7 +28,7 @@ public class FuncionarioEndereco implements Serializable {
 	@Column(nullable = false)
 	private String telefone;
 
-	@ManyToOne(cascade = CascadeType.REMOVE)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	private Funcionario funcionario;
 
 	public Long getId() {
