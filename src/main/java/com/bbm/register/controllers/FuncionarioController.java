@@ -118,6 +118,7 @@ public class FuncionarioController {
 			ModelAndView view = new ModelAndView("cadastros/cadastroFuncionario");
 			view.addObject("usuarios", funcionarioRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
 			view.addObject("profissoes", profissaoRepository.findAll());
+			view.addObject("ms", "Funcionário Salvo Com Sucesso!");
 			view.addObject("usuario", new Funcionario());
 
 			return view;
@@ -227,6 +228,7 @@ public class FuncionarioController {
 
 			ModelAndView view = new ModelAndView("cadastros/endereco");
 			view.addObject("usuario", usuario);
+			view.addObject("ms", "Endereco Salvo Com Sucesso!");
 			view.addObject("endereco", enderecoRepository.getEnderecos(idUser));
 
 			return view;
