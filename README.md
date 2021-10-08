@@ -6,10 +6,9 @@ Um pequeno sistema criado com o intuito de treinar a arquitetura MVC usando o Sp
  https://bbmregister29.herokuapp.com/
  
 - UserName: Belmiro
-- PassWord: admin
- 
- ou 
- 
+- PassWord: admin 
+  
+  ou  
 - UserName: Junior
 - Password: 123
 
