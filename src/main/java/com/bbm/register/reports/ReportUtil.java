@@ -1,5 +1,6 @@
 package com.bbm.register.reports;
 
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -25,7 +26,7 @@ public class ReportUtil implements Serializable{
 		
 		//Cria a lista de dados para a impressao
 		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(listaDados);
-		 
+				
 		//Carrega o caminho do arquivo jasper
 		String url = context.getRealPath("reports") + File.separator + relatorio + ".jasper";
 		
