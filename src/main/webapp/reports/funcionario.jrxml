@@ -36,7 +36,7 @@
 				<textField pattern="MMM d, yyyy h:mm:ss a">
 					<reportElement x="20" y="60" width="270" height="30" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="c39113e4-5392-4298-b1a1-9fa554903eaa"/>
 					<textElement>
-						<font fontName="Bell MT" size="16" isBold="true" isItalic="true"/>
+						<font fontName="Times New Roman" size="19" isBold="true" isItalic="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 				</textField>
@@ -57,7 +57,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="80506207-2b15-42e8-809f-9285f7e65db3"/>
 				</reportElement>
 				<textElement>
-					<font size="14" isBold="true"/>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ID]]></text>
 			</staticText>
@@ -66,7 +66,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4c3649d5-dbd0-4ca2-a2a4-d09729f21b31"/>
 				</reportElement>
 				<textElement>
-					<font size="14" isBold="true"/>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[BI]]></text>
 			</staticText>
@@ -75,7 +75,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c37d7168-a158-4fa6-83af-df3a94775852"/>
 				</reportElement>
 				<textElement>
-					<font size="14" isBold="true"/>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nome]]></text>
 			</staticText>
@@ -84,7 +84,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fa424fee-2b09-40f6-af33-7f7b682fcc36"/>
 				</reportElement>
 				<textElement>
-					<font size="14" isBold="true"/>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Email]]></text>
 			</staticText>
@@ -93,7 +93,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2bf2e9e6-0973-4c24-be16-65b24ab70cbe"/>
 				</reportElement>
 				<textElement>
-					<font size="14" isBold="true"/>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nacimento]]></text>
 			</staticText>
@@ -109,7 +109,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="80506207-2b15-42e8-809f-9285f7e65db3"/>
 				</reportElement>
 				<textElement>
-					<font size="12"/>
+					<font fontName="Times New Roman" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
 			</textField>
@@ -118,7 +118,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c37d7168-a158-4fa6-83af-df3a94775852"/>
 				</reportElement>
 				<textElement>
-					<font size="12"/>
+					<font fontName="Times New Roman" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
@@ -127,7 +127,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fa424fee-2b09-40f6-af33-7f7b682fcc36"/>
 				</reportElement>
 				<textElement>
-					<font size="12"/>
+					<font fontName="Times New Roman" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
 			</textField>
@@ -136,7 +136,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4c3649d5-dbd0-4ca2-a2a4-d09729f21b31"/>
 				</reportElement>
 				<textElement>
-					<font size="12"/>
+					<font fontName="Times New Roman" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{bi}]]></textFieldExpression>
 			</textField>
@@ -145,7 +145,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="15f7bedb-0b73-4aa2-b807-13223ff37b6d"/>
 				</reportElement>
 				<textElement>
-					<font size="12"/>
+					<font fontName="Times New Roman" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{dataNasc}]]></textFieldExpression>
 			</textField>
@@ -158,11 +158,16 @@
 		<band height="17">
 			<textField>
 				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="5b4b881a-e38b-4983-b2a0-3378e07c39d2"/>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
 				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="129270c4-de49-4f1b-8e5f-638ebb1a1ce7"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
