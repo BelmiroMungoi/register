@@ -14,3 +14,19 @@ Um pequeno sistema criado com o intuito de treinar a arquitetura MVC usando o Sp
 
 # Cadastro de Endereco
 ![endereco](https://user-images.githubusercontent.com/56709665/136374782-7499e9ef-9e77-48ba-bcba-d6a23322654c.jpg)
+
+## 🛠 Tecnologias utilizadas
+### :coffee: Back end
+- [Java](https://www.oracle.com/br/java/)
+- JPA / Hibernate
+- [Spring Boot](https://spring.io/projects/spring-boot)
+- [Spring Framework](https://spring.io/projects/spring-framework)
+- [Spring Data JPA](https://spring.io/projects/spring-data-jpa) 
+- [Spring Security](https://spring.io/projects/spring-security)
+- [Maven](https://maven.apache.org/)
+
+### ⚛️ Front end
+- Javascript
+- CSS
+- HTML
+- BootStrap
