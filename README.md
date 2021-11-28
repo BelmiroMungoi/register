@@ -26,7 +26,6 @@ Um pequeno sistema criado com o intuito de treinar a arquitetura MVC usando o Sp
 - [Maven](https://maven.apache.org/)
 
 ### ⚛️ Front end
-- Javascript
 - CSS
 - HTML
 - BootStrap
