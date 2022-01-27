@@ -3,8 +3,8 @@ Um pequeno sistema criado com o intuito de treinar a arquitetura MVC usando o Sp
 
 Link: https://bbm-register.herokuapp.com/
 
-Username: Admin
-Password: admin
+ - Username: Admin
+ - Password: admin
 
 ## TELAS
 
